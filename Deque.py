@@ -106,6 +106,10 @@ class Deque:
                 self.isWrapped = True
             else:
                 self.headIndex -=1
+        else:
+                self.headIndex = (self.size - 1) #Array size has already been checked and adjusted if necessary, so we should be free to assign the outer bound to the headIndex without overwritting 
+                self.tailIndex = (self.size - 1)
+                self.isWrapped = True   
         self.theArray[self.headIndex] = value
         self.elementsCount +=1
                 
@@ -124,29 +128,28 @@ class Deque:
             else:
                 self.tailIndex -=1
             self.elementsCount -=1
-            
             return tailValue
-            
+        
 
 #==============================================================================
 #FUNCTION BELOW FOR TESTING ONLY
 #==============================================================================
     def printer(self): 
         """Prints out the full array and key variables"""
-        print("Queue Order: [", end="")
+        print("\nQueue[index] Order: [", end="")
         if self.isWrapped == True:
             for i in range (self.headIndex, self.size):
-                print(self.theArray[i], end=", ")
+                print(f"{self.theArray[i]}[{i}]", end=", ")
             for i in range (0, self.tailIndex+1):
-                print(self.theArray[i], end=", ")
+                print(f"{self.theArray[i]}[{i}]", end=", ")
         else:
             for i in range (self.headIndex, self.tailIndex+1):
-                print(self.theArray[i], end=", ")
+                print(f"{self.theArray[i]}[{i}]", end=", ")
         print("] ", end="")
-        print("Index Order: [", end="")
-        for i in range(0, self.size):
-            print(self.theArray[i], end=", ")
-        print("] ", end="")
+        # print("Index Order: [", end="")
+        # for i in range(0, self.size):
+        #     print(self.theArray[i], end=", ")
+        # print("] ", end="")
         print(f"|| headIndex: {self.headIndex} || tailIndex: {self.tailIndex} || elementsCount: {self.elementsCount} || size: {self.size} || isWrapped: {self.isWrapped} ||") 
 #==============================================================================
 #==============================================================================
