@@ -11,14 +11,14 @@ from Deque import Deque
 def main():
     # uncomment functions to run tests
 
-    # queueTest()
-    # resizeTest()
-    # listTest()
-    # addHeadTest()
-    # removeTailTest()
-    # revQueueTest()
+    queueTest()
+    resizeTest()
+    listTest()
+    addHeadTest()
+    removeTailTest()
+    revQueueTest()
     mixTest()
-    # thinkTest()
+    thinkTest()
     
 
 def queueTest():
@@ -299,10 +299,16 @@ def thinkTest():
 
     NUM_THINK = 5
     thinkValues = 2, 3, 5, 7, 11
+    thinkQueue = Deque()
 
-
+    for index in range (NUM_THINK):
+        thinkQueue.addTail(thinkValues[index])
 
     print("Values in reverse order should be 11 7 5 3 2")
+    print("Actually ", end="")
+    for index in range(NUM_THINK):
+        print(thinkQueue.removeTail(), end = " ")
+    print()    
     print("\nDone with thinking test\n")
 
 
