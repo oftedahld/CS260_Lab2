@@ -33,6 +33,8 @@ class Deque:
 
     def removeHead(self):
         """Save the value at the head of the queue, update it to remove access to that value, and return the saved value, wrapping if necessary"""
+        if self.elementsCount == 0:
+            raise IndexError('out_of_range') 
         headValue = self.theArray[self.headIndex]
         self.elementsCount -=1
         if self.elementsCount == 0: #If head removal results in no items left, reset the key attributes to default
@@ -40,7 +42,10 @@ class Deque:
             self.tailIndex = 0
             self.isWrapped = False
         else:
-            self.headIndex +=1 #Need to add logic for when index would now flip back over to 0 if we were wrapped but at the end of the array bounds
+            if self.headIndex == self.size-1: #If the headIndex is at the end of the bounds already, need to wrap back to 0 index
+                self.headIndex = 0
+            else:
+                self.headIndex +=1
         #print(f"Removed value: {headValue}") #TESTING ONLY, REMOVE FOR SUBMISSION
         #self.printer() #TESTING ONLY, REMOVE FOR SUBMISSION
         return headValue
@@ -70,8 +75,8 @@ class Deque:
         self.theArray = self.theArray + ([0] * self.size)
         self.size = self.size * 2
 
-    def unWrapQueue(self):
-        """Takes the current array and unwraps it, resetting the headIndex to 0, tailIndex to elementsCount -1, and isWrapped to False"""
+    def unWrapQueue(self): #Build as a seprate function so it could be used outside of the resize() function if needed
+        """Takes the current array and unwraps it, resetting the headIndex to 0, tailIndex to elementsCount -1, and isWrapped to False."""
         tempArray = [0] * self.size
         tempArrayIndex = 0
         for i in range (self.headIndex, self.size):
@@ -111,16 +116,29 @@ class Deque:
                 self.headIndex -=1
         self.theArray[self.headIndex] = value
         self.elementsCount +=1
-        self.printer() #TESTING ONLY, REMOVE FOR SUBMISSION
-                
-                
+        # print(f"Added value: {value}") #TESTING ONLY, REMOVE FOR SUBMISSION
+        # self.printer() #TESTING ONLY, REMOVE FOR SUBMISSION
 
-
-    
+                
     def removeTail(self):
         """Saves the value at the tail of the queue, updating the queue to remove access to the item at the tail, and returns the saved value. Wrapping if necessary. If the queue is empty, throw an exception.(IndexError)."""
-        
-
+        if self.elementsCount == 0:
+            raise IndexError('out_of_range')
+        else:
+            tailValue = self.theArray[self.tailIndex]
+            if self.tailIndex == 0: #If the current tail is at the the outer bound, updated tailIndex will be moved to index 0
+                if self.elementsCount > 1:
+                    self.tailIndex = self.size-1
+                    self.isWrapped = False
+                else:
+                    self.tailIndex = 0
+            else:
+                self.tailIndex -=1
+            self.elementsCount -=1
+            # print(f"Removed value: {tailValue}") #TESTING ONLY, REMOVE FOR SUBMISSION
+            # self.printer() #TESTING ONLY, REMOVE FOR SUBMISSION
+            return tailValue
+            
 
 #==============================================================================
 #FUNCTIONS BELOW FOR TESTING ONLY, REMOVE FOR SUBMISSION
